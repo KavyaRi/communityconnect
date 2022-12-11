@@ -1,0 +1,22 @@
+* 
+  .btn{
+      background-color: #8bc540;
+  }
+
+  .btn1{
+    background-color: firebrick;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo1 {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(720deg);
+    }
+  }
