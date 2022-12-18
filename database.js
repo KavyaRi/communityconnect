@@ -3,7 +3,7 @@ const cors = require("cors")
 const app = express()
 const bcrypt = require("bcrypt");
 var mongojs = require('mongojs');
-var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['mentor','mentee','mymentors'])
+var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['Admin','mentor','mentee','mymentors'])
 const saltRounds = 10;
 
 app.use(express.json());
@@ -38,7 +38,27 @@ app.post('/register1',(req,res)=>{
         }
     })
 });
+app.post('/Admin1', (req,res) => {
+    const Name = req.body.Name
+    const Password = req.body.Password
 
+    db.Admin.find({Name:Name},(err,found)=>{
+        if(err){
+            res.send({err:err})
+        }
+        if(found.length > 0){
+            if(found[0].Password === Password){
+                res.send("hi");
+            }
+            else{
+                res.send({message:"Wrong Credentials..!"})
+            }
+        }
+        else{
+            res.send({message:"User Doesn't Exist! Please register"})
+        }
+    })
+})
 app.post('/login1', (req,res) => {
     const RegdNo = req.body.RegdNo
     const password = req.body.Password

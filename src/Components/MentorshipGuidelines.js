@@ -1,15 +1,27 @@
 import React from "react";
-import Navbar1 from "./Navbar1.js";
 import './MentorshipGuidelines.css'
 import { MentorGuidelines } from "./MentorGuidelines.js";
 import { MenteeGuidelines } from "./MenteeGuidelines.js";
 import ApplyGuidelines from "./ApplyGuidelines.js";
+import Navbar1 from "./Navbar1";
+import { Link } from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+
 
 function MentorshipGuidelines() {    
 return (
 	<div> 
         <Navbar1 />
-        <div class = "container">
+        <div class = "container mt-5">
+        <div className="row mt-5">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>Guidelines</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <hr />
+                </div>                
+            </div>
             <div class = "row row-header">
                 <div class="col-12 col-sm-6 mt-5">
                     <h1 className="h1--guidelines">Mentor Guidelines</h1>

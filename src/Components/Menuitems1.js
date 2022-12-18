@@ -5,8 +5,14 @@ export const Menuitems1 = [
         cName : 'nav-links'
     },
     {
-        title : 'Login',
+        title : 'Student',
         url : '/login',
         cName : 'nav-links'
     },
+    {
+        title : 'Admin',
+        url : '/AdminLogin',
+        cName : 'nav-links'
+    },
+
 ]

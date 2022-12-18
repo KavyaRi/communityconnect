@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import './SignUp.css';
-import logo from './logo1.png'
-import Axios from 'axios'
+import Axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import validator from 'validator';
 import Navbar1 from "./Navbar1";
-import validator from 'validator'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 toast.configure();
 const SignUp = () => {
@@ -61,20 +61,25 @@ const SignUp = () => {
   }
   return (
     <div>
-      <Navbar1 />
+    <Navbar1 />
       <div className = "container">
-        <div className = "row">
-          <div className="col-12 mt-5">
-            <h1 className = "mt-5">WELCOME</h1> 
-            <hr></hr>
-          </div>
+
+        <div className="row mt-5">
+          <Breadcrumb>
+              <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to="/login">Login</Link></BreadcrumbItem>
+              <BreadcrumbItem active>Signup</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="col-12">
+              <h3>Signup</h3>
+              <hr />
+          </div>                
+        </div>
           <div className = "row row-content align-items-center">
-            <div className="col-12 col-sm-6 mt-5">
-              <div className="card mt-5">
+            <div className="col-12 col-sm-6">
+              <div className="card">
                 <h1 className="card-header bg-warning text-black">
-                <h3 className = "mt-5"></h3>
-                SignUp Form
-                <h3></h3>
+                <h3 className = "mt-5">SignUp Form</h3>
                 </h1>
                 <div className="card-body mt-5">
                   <form className = "form" method="post" onSubmit={handleSubmit}>
@@ -132,13 +137,9 @@ const SignUp = () => {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-sm-6">
-              <img src={logo} className="App-logo1" alt="logo"/>
-            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

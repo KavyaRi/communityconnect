@@ -5,11 +5,11 @@ import {Helmet} from "react-helmet";
 import axios from 'axios'
 import { toast } from "react-toastify";
 import { ReactSession } from 'react-client-session';
-import logo from './logo1.png';
-import './Header.css';
 import {Multiselect} from 'multiselect-react-dropdown'
 import data from './Data.json'
-import Header1 from "./Header1"
+import Header1 from "./Header1";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 class UpdateProfile extends React.Component{
 
@@ -95,19 +95,23 @@ class UpdateProfile extends React.Component{
                 
                 <Navbar />
                 <div className="container">
+                <div className="row mt-5">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>Update</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h4>Update your Profile</h4>
+                        <hr />
+                    </div>                
+                </div>
                     <div className = "row row-content align-items-center">
-                        <div className="col-12 mt-5">
-                            <h1 className = "mt-5">Update details</h1> 
-                            <hr></hr>
-                        </div>
                         <div className="col-12 col-sm-6 mt-5">
-                            <div className="card mt-5">
+                            <div className="card">
                                 <h1 className="card-header bg-warning text-black">
-                                <h3 className = "mt-5"></h3>
-                                Request Form
-                                <h3></h3>
+                                <h3 className = "mt-5">Request Form</h3>
                                 </h1>
-                                <div className="card-body mt-5">
+                                <div className="card-body">
                                     <form className = "form12" method="post" onSubmit={handleSubmit}>
                                         <div className="contact--tags">
                                             {arr.map((item, index) => {
@@ -147,9 +151,6 @@ class UpdateProfile extends React.Component{
                                 </div>
                             </div>
                         </div>
-                            <div className="col-12 col-sm-6">
-                                <img src={logo} className="App-logo1" alt="logo"/>
-                            </div>
                         </div>
                     </div>
                 </div>}

@@ -5,6 +5,8 @@ import './MentorProfileDisplay.css'
 import { ReactSession } from "react-client-session";
 import MentorProfileDisplay from "./MentorProfileDisplay";
 import NoResults from "./NoResults";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from "react-router-dom";
 
 class MenteeProfile extends React.Component{
 
@@ -31,12 +33,27 @@ class MenteeProfile extends React.Component{
 	const {data} = this.state
 	// console.log("data",data);
     return (
-      <div className="mentor-body">
-		  <Navbar />
-		  <div >
-		  {data.length === 0 ? <NoResults data = "You don't have any mentors"/> : <div className="mentor-contacts">{data.map(da => <div key={da.cause}><MentorProfileDisplay mentor={da.mentor} name={da.name} description={da.Description} tags={da.tags} mentorTelegram={da.mentorTelegram}/></div>)}</div>}
-		  </div>
-      </div>
+    <div className="mentor-body">
+		<Navbar />
+		<div className="container">
+			<div className="row mt-5">
+				<Breadcrumb>
+					<BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
+					<BreadcrumbItem active>MyMentor</BreadcrumbItem>
+				</Breadcrumb>
+				<div className="col-12">
+					<h4>My Mentors</h4>
+					<hr />
+				</div>                
+			</div>
+			<div >
+				{data.length === 0 ? <NoResults data = "You don't have any mentors"/> : <div className="mentor-contacts">{data.map(da => <div key={da.cause}><MentorProfileDisplay mentor={da.mentor} name={da.name} description={da.Description} tags={da.tags} mentorTelegram={da.mentorTelegram}/></div>)}</div>}
+			</div>
+		</div>
+		<div className="col-12 mt-5">
+			<hr />
+		</div>   
+	</div>
     );
   }
 }

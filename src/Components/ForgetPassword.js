@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import './Login.css'
-import logo from './logo1.png'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar1 from "./Navbar1";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Login from './Login'
-import { ReactSession } from "react-client-session";
+import Navbar1 from "./Navbar1";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 toast.configure();
 const ForgetPassword = () => {
@@ -43,18 +41,22 @@ const ForgetPassword = () => {
             <div>
             <Navbar1 />
             <div className = "container">
-              <div className = "row">
-                <div className="col-12 mt-5">
-                  <h1 className = "mt-5">WELCOME</h1> 
-                  <hr></hr>
-                </div>
+              <div className="row mt-5">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem><Link to="/login">Login</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>ForgetPassword</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>Reset Here</h3>
+                    <hr />
+                </div>                
+              </div>
                 <div className = "row row-content align-items-center">
-                  <div className="col-12 col-sm-6 mt-5">
-                    <div className="card mt-5">
+                  <div className="col-12 col-sm-6">
+                    <div className="card">
                       <h1 className="card-header bg-warning text-black">
-                      <h3 className = "mt-5"></h3>
-                      Change Password
-                      <h3></h3>
+                      <h3 className = "mt-5">Change Password</h3>
                       </h1>
                       <div className="card-body mt-5">
                         <form className = "form1" method="post" onSubmit={handleSubmit}>
@@ -88,13 +90,9 @@ const ForgetPassword = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-12 col-sm-6">
-                    <img src={logo} className="App-logo1" alt="logo"/>
-                  </div>
                 </div>
               </div>
             </div>
-          </div>
         );
 }
 

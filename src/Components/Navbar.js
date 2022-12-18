@@ -1,53 +1,101 @@
+
 import React, {Component} from "react";
-import {MenuItems} from "./MenuItems";
-import { Navbar,NavbarBrand } from 'reactstrap';
-import './Navbar.css';
 import logo from './logo1.png';
 import {Link} from 'react-router-dom'
 import { ReactSession } from "react-client-session";
-import Dropdown from 'react-bootstrap/Dropdown';
-import './MyProfile.css'
-import {BsFillChatDotsFill,BsFillPersonFill} from 'react-icons/bs'
+import './Navbar.css'
+import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,DropdownMenu, DropdownItem,ButtonDropdown, DropdownToggle} from "reactstrap";
 
 class Navbari extends Component {
-     state = {clicked: false}
-     handleClick = () => {
-         this.setState({clicked: !this.state.clicked})
-     }
-
-        render() {
-            const text = "      "+ReactSession.get("Registernum")
-            return (
-                <Navbar dark color="primary">
+    constructor(props) {
+        super(props);
+        this.state = {
+            isNavOpen: false,
+            isDropOpen: false,
+        };
+        this.toggleNav = this.toggleNav.bind(this);
+        this.DropDown = this.DropDown.bind(this);
+    }
+    toggleNav() {
+        this.setState({
+        isNavOpen: !this.state.isNavOpen
+        });
+    }
+    DropDown() {
+        this.setState({
+        isDropOpen: !this.state.isDropOpen
+        });
+    }
+    render() {
+        const text = "      "+ReactSession.get("Registernum")
+        return (
+            <>
+                <Navbar dark expand="md">
                     <div className="container">
-                        <NavbarBrand href="/"><img src={logo} alt="logo" height='50px' width='75px' /></NavbarBrand>
-                        <div className="menu-icon" onClick={this.handleClick}>
-                            <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
-                        </div>
-                        <ul className = {this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-                            {MenuItems.map((item, index) => {
-                                return (
-                                <li>
-                                    <Link to = {item.url} className={item.cName}>{item.title}</Link>
-                                </li>
-                                )
-                            })}
-                            <Dropdown>
-                            <Dropdown.Toggle id="dropdown-toggle-button"><BsFillPersonFill/></Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.ItemText className="itemtext"><h2 className="text-dark"> {text} </h2></Dropdown.ItemText>
-                                    <Dropdown.Item className="dropdown-items" style={{textDecoration:"none"}}><Link to="/updateprofile" >Update Profile</Link></Dropdown.Item>
-                                    <Dropdown.Item className="dropdown-items" style={{textDecoration:"none"}}><Link to="/requests" >Requests</Link></Dropdown.Item>
-                                    <Dropdown.Item className="dropdown-items" style={{textDecoration:"none"}}><Link to="/mentorprofile" >My Mentors</Link></Dropdown.Item>
-                                    <Dropdown.Item className="dropdown-items" style={{textDecoration:"none"}}><Link to="/menteeprofile" >My Mentees</Link></Dropdown.Item>
-                                    <Dropdown.Item className="dropdown-items" style={{textDecoration:"none"}}><Link to="/logout" >Logout</Link></Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </ul>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <NavbarBrand className="mr-auto" href="/Header">
+                            <img src={logo} height="50" width="75" 
+                                    alt="Ristorante Con Fusion" />
+                        </NavbarBrand>
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                                <NavItem>
+                                    <Link className="Navlink" to="/home"> 
+                                        <h2><span className="ml-5 fa fa-home fa-lg"></span> Menu </h2>
+                                    </Link> 
+                                </NavItem>    
+                                <NavItem>
+                                    <Link className="Navlink" to="/mentorship-guidelinesin"> 
+                                        <h2><span className="ml-5 fa fa-info fa-lg"></span>  Guidelines</h2>
+                                    </Link>    
+                                </NavItem> 
+                                <NavItem>
+                                    <Link className="Navlink" to="/mentors"> 
+                                        <h2><span className="ml-5 fa fa-users fa-lg"></span>  Mentors</h2>
+                                    </Link>    
+                                </NavItem> 
+                                <NavItem>
+                                    <Link className="Navlink" to="/become-a-mentor"> 
+                                        <h2><span className="ml-5 fa fa-user fa-lg"></span>  BecomeAMentor</h2>
+                                    </Link>    
+                                </NavItem>
+                                <NavItem>
+                                    <Link className="Navlink" to="/home"> 
+                                        <h2><span className="ml-5 fa fa-comments fa-lg"></span>  Chat</h2>
+                                    </Link>    
+                                </NavItem> 
+                                <NavItem>
+                                    <ButtonDropdown isOpen={this.state.isDropOpen} toggle={this.DropDown}>
+                                        <DropdownToggle className = " Button ml-5 mt-3 " id="dropdown-toggle-button">
+                                            <h2 className="ml-auto"><span className="fa fa-user-circle lg "></span>Profile</h2>
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem header><h2 className="text-dark"><span class="fa fa-android lg"></span> {text}</h2></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/updateprofile" ><h2><span class="fa fa-bell lg"></span>Update Profile</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/requests" ><h2><span class="fa fa-edit lg"></span>Requests</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/mentorprofile" ><h2><span class="fa fa-user lg"></span>My Mentors</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/menteeprofile" ><h2><span class="fa fa-user lg"></span>My Mentees</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/Header" ><h2><span class="fa fa-sign-out lg"></span>Logout</h2></Link></DropdownItem>
+                                        </DropdownMenu>
+                                    </ButtonDropdown>
+                                </NavItem>  
+                            </Nav>
+                        </Collapse>    
                     </div>
                 </Navbar>
-            )
-   
-        }
- }
- export default Navbari
+                <Jumbotron>   
+                    <div className="container">
+                        <div className="row row-header">
+                            <div className="col-12 col-sm-6"> 
+                                <h1>Community Connect</h1>
+                                <p>We are here to Connect the best minds of the campaus to make several fusion experiences, associate and Make your fantacy come true!</p>
+                            </div>
+                        </div>
+                    </div>
+                </Jumbotron> 
+            </>
+        )
+
+    }
+}
+export default Navbari;
