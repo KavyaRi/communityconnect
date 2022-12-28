@@ -27,7 +27,9 @@ class Navbari extends Component {
         });
     }
     render() {
-        const text = "      "+ReactSession.get("Registernum")
+        const text = "      "+ReactSession.get("Registernum");
+
+        const name = ReactSession.get("Name");
         return (
             <>
                 <Navbar dark expand="md">
@@ -60,8 +62,13 @@ class Navbari extends Component {
                                     </Link>    
                                 </NavItem>
                                 <NavItem>
-                                    <Link className="Navlink" to="/home"> 
+                                    <Link className="Navlink" to="/chat"> 
                                         <h2><span className="ml-5 fa fa-comments fa-lg"></span>  Chat</h2>
+                                    </Link>    
+                                </NavItem> 
+                                <NavItem>
+                                    <Link className="Navlink" to="/SetAvather"> 
+                                        <h2><span className="ml-5 fa fa-camera fa-lg"></span>  Avathar</h2>
                                     </Link>    
                                 </NavItem> 
                                 <NavItem>
@@ -71,11 +78,12 @@ class Navbari extends Component {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem header><h2 className="text-dark"><span class="fa fa-android lg"></span> {text}</h2></DropdownItem>
-                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/updateprofile" ><h2><span class="fa fa-bell lg"></span>Update Profile</h2></Link></DropdownItem>
-                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/requests" ><h2><span class="fa fa-edit lg"></span>Requests</h2></Link></DropdownItem>
-                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/mentorprofile" ><h2><span class="fa fa-user lg"></span>My Mentors</h2></Link></DropdownItem>
-                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/menteeprofile" ><h2><span class="fa fa-user lg"></span>My Mentees</h2></Link></DropdownItem>
-                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/Header" ><h2><span class="fa fa-sign-out lg"></span>Logout</h2></Link></DropdownItem>
+                                            <DropdownItem header><h2 className="text-dark"> {name}</h2></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/updateprofile" ><h2><span className="fa fa-bell lg"></span>Update Profile</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/requests" ><h2><span className="fa fa-edit lg"></span>Requests</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/mentorprofile" ><h2><span className="fa fa-user lg"></span>My Mentors</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/menteeprofile" ><h2><span className="fa fa-user lg"></span>My Mentees</h2></Link></DropdownItem>
+                                            <DropdownItem className="dropdown-items" style={{textDecoration:"none"}}><Link to="/" ><h2><span className="fa fa-sign-out lg"></span>Logout</h2></Link></DropdownItem>
                                         </DropdownMenu>
                                     </ButtonDropdown>
                                 </NavItem>  

@@ -1,0 +1,17 @@
+.Chat-Box{
+    height: 100vh;
+    width: 100vw;
+    background: #131324;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+.container{
+    height: 85vh;
+    height: 85vh;
+    background-color: #00000076;
+    display: grid;
+    grid-template-columns: 75% 25%;
+}       

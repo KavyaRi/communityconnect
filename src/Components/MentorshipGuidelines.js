@@ -15,7 +15,7 @@ return (
         <div class = "container mt-5">
         <div className="row mt-5">
                 <Breadcrumb>
-                    <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                     <BreadcrumbItem active>Guidelines</BreadcrumbItem>
                 </Breadcrumb>
                 <div className="col-12">

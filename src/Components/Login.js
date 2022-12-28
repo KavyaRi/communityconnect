@@ -14,24 +14,32 @@ const Login = () => {
     const [RegdNo, setRegdNo] = useState("");
     const [Password, setPassword] = useState("");
     
-    const login1 = () => {
-      Axios.post('http://localhost:3001/login1', {
+    const login1 = async (e) => {
+      const {data} = await Axios.post('http://localhost:3001/login1', {
         RegdNo: RegdNo,
         Password: Password
-      }).then((response) => {
-        if (response.data.message) {
-          toast.error(response.data.message,{position:toast.POSITION.TOP_CENTER});
+      }).then(response =>{return response;})
+        if (data.message) {
+          toast.error(data.message,{position:toast.POSITION.TOP_CENTER});
         }
         else {
-          const Name = response.data[0].FirstName+" "+response.data[0].LastName
-          const tel = response.data[0].Telegram
+          
+          const Name = data[0].FirstName+" "+data[0].LastName;
+          const tel = data[0].Telegram;
+          const AvaT = data[0].AvatharImage;
+          const ide = data[0]._id;
           ReactSession.set("Registernum",RegdNo);
           ReactSession.set("Name",Name);
           ReactSession.set("Tele",tel);
+          ReactSession.set("AvaImg",AvaT);
+          ReactSession.set("id",ide);
+          localStorage.setItem(
+            "chat-app-user",
+            JSON.stringify(data)
+          );
           window.location.assign("/home");
           toast.success("Welcome to Community Connect!!")
         }
-      });
     };
     
     function validateForm() {
@@ -47,7 +55,7 @@ const Login = () => {
         <div className = "container">
             <div className="row mt-5">
                 <Breadcrumb>
-                    <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+                    <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                     <BreadcrumbItem active>Login</BreadcrumbItem>
                 </Breadcrumb>
                 <div className="col-12">

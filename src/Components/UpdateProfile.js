@@ -78,13 +78,18 @@ class UpdateProfile extends React.Component{
             mentor : ReactSession.get("Registernum"),
             Tags : JSON.stringify(this.state.selectedValue) ,
             Des : this.state.Des
-        }).then((response) => 
-        toast.success("Details are Updated Successfully!"),
-        )
-    }
+        }).then((response) => {
+            if (response.data.message) {
+              toast.error(response.data.message,{position:toast.POSITION.TOP_CENTER});
+            }
+            else {
+              toast.success("Your details has been updated successfully")
+            }
+          });
+        }
         return (
         <div>
-            {this.state.data1.length === 2 && this.state.Des.length === 0 ? <Header1 message="You need to be mentor first"/>:<div>
+            {this.state.data1.length === 0 && this.state.Des.length === 0 ? <Header1 message="You need to be mentor first"/>:<div>
                 <Helmet>
                     <meta charSet="utf-8" />
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

@@ -30,7 +30,7 @@ import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} f
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                             <Nav navbar>
                                 <NavItem>
-                                    <Link className="Navlink" to="/Header"> 
+                                    <Link className="Navlink" to="/"> 
                                         <h2><span className="fa fa-home fa-lg"></span> Home </h2>
                                     </Link> 
                                 </NavItem>    

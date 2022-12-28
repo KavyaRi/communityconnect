@@ -1,14 +1,16 @@
-const express = require("express")
-const cors = require("cors")
-const app = express()
+const express = require("express");
+const cors = require("cors");
+const app = express();
 const bcrypt = require("bcrypt");
 var mongojs = require('mongojs');
-var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['Admin','mentor','mentee','mymentors'])
+var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['Admin','mentor','mentee','messages','mymentors']);
 const saltRounds = 10;
+const socket = require("socket.io");
 
 app.use(express.json());
 app.use(cors());
-app.listen(3001,()=>{
+
+const server = app.listen(3001,()=>{
     console.log("Listening..!")
 });
 
@@ -27,7 +29,7 @@ app.post('/register1',(req,res)=>{
         else{
             db.mentee.find({RegistrationNumber: RegdNo},(err,response)=>{
                 if(response.length == 0){
-                    db.mentee.insert({FirstName:FirstName,LastName:LastName,Email:Email,Password:hash,RegistrationNumber:RegdNo,Telegram:telegram},(error,res1)=>{
+                    db.mentee.insert({FirstName:FirstName,LastName:LastName,Email:Email,Password:hash,RegistrationNumber:RegdNo,Telegram:telegram,isAvatharImageSet:false,AvatharImage : ""},(error,res1)=>{
                         res.send({message:"Let's begin your journey with Community Connect."});
                     })
                 }
@@ -38,6 +40,34 @@ app.post('/register1',(req,res)=>{
         }
     })
 });
+app.post('/addMessage',(req,res) => {
+    const from = req.body.from
+    const to = req.body.to
+    const message = req.body.message
+    db.messages.insert({message:{text:message},users:[from,to],sender:from,createdAt : new Date(),updatedAt : new Date()},(error,res1)=>{
+        res.send({message:"Data Inserted."})
+    });
+})
+app.post('/getMessages',async (req,res) =>{
+    const from = req.body.from
+    const to = req.body.to
+    db.messages.find({users : {$all : [from,to]}},(err,res1)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            const projectedMessages = res1.map((msg) => {
+                return {
+                  fromSelf: msg.sender.toString() === from,
+                  message: msg.message.text,
+                };
+            });
+            return res.json(projectedMessages);
+        }
+        
+    })
+
+})
 app.post('/Admin1', (req,res) => {
     const Name = req.body.Name
     const Password = req.body.Password
@@ -70,7 +100,7 @@ app.post('/login1', (req,res) => {
         if(result.length > 0){
             bcrypt.compare(password,result[0].Password,(error,response)=>{
                 if(response){
-                    res.send(result);
+                    return res.json(result);
                 }
                 else{
                     res.send({message:"Wrong Credentials..!"})
@@ -91,17 +121,23 @@ app.post('/signup1',(req,res) => {
     const Telegram = req.body.Telegram
     db.mentor.find({RegistrationNumber:RegdNo},(err,res2)=>{
         if(res2.length == 0){
-            db.mentor.insert({RegistrationNumber:RegdNo,Tags:tags,Name:Name,Description:Des,Telegram:Telegram,Rating:0},(err,res1)=>{
+            db.mentor.insert({RegistrationNumber:RegdNo,Tags: tags,Name:Name,Description:Des,Telegram:Telegram,Status:'Requested',Rating:0},(err,res1)=>{
                 if(err){
                     console.log(err);
                 }
                 else{
-                    res.send({message:"Congratulations on being a mentor, Please check mentorship guidelines to be a perfect mentor."})
+                    res.send({message:"Request Submited for Mentorship"})
                 }
             })
         }
+        
         else{
-            res.send({message:"User Already exist..! Update if needed."})
+            if(res2[0].Status === "Requested"){
+                res.send({message:"Wait for admin to confirm you as a mentor"})
+            }
+            else{
+                res.send({message:"User Already exist..! Update if needed."})
+            }
         }
     })
 });
@@ -130,6 +166,17 @@ app.post('/displayrequestedmentee',(req,res)=>{
         }
     })
 })
+app.post('Profiles',(req,res)=>{
+    db.mentor.find({Status:"Requested"},(err,res1)=>{
+        console.log(res1)
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(res1)
+        }
+    })
+})
 
 app.post('/displaymentees',(req,res)=>{
     var mentor = req.body.mentor
@@ -147,11 +194,16 @@ app.post('/getProfile',(req,res) => {
     var val = req.body.sendvalue
     var regdno = req.body.regdno
     db.mentor.find({Tags:{$regex : val},RegistrationNumber:{$ne:regdno}},(err,res1)=>{
-        if(err){
-            console.log(err);
+        if(res1[0].Status === 'Accepted'){
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.send(res1);
+            }
         }
         else{
-            res.send(res1);
+            res.send('')
         }
     })
 })
@@ -315,25 +367,58 @@ app.post('/getdetails', (req,res)=>{
     var mentor = req.body.mentor
     // console.log(mentor)
     db.mentor.find({RegistrationNumber: mentor}, (err, res1) => {
-        if(err){
-            console.log(err)
-        }
-        else if(res1.length == 0){
-            res.send({Tags: "[]", Des : ""})
-        }
-        else{
-            res.send({Tags: res1[0].Tags, Des : res1[0].Description})
+        if(res1[0].Status === "Accepted"){
+            if(err){
+                console.log(err)
+            }
+            else if(res1.length == 0){
+                res.send({Tags: "[]", Des : ""})
+            }
+            else{
+                res.send({Tags: res1[0].Tags, Des : res1[0].Description})
+            }
         }
     })
 } )
-
+app.post('/AllUsers', (req,res,next)=>{
+    var mentee = req.body.mentee
+    
+    db.mentee.find({RegistrationNumber: {$ne : mentee}}, (err, res1) => {
+        if(err){
+            console.log(err)
+        }
+        else if(res1 !== 0){
+            return res.json(res1)
+        }
+    })
+} )
+app.post('/SetAvathar1',(req,resp) =>{
+    var mentee = req.body.mentee
+    var image = req.body.image
+    db.mentee.find({RegistrationNumber:mentee},(err,respo)=>{
+        if(respo.length !== 0){
+            db.mentee.updateOne({RegistrationNumber:mentee},{$set : {isAvatharImageSet:true,AvatharImage : image}},(err,re1)=>{
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    resp.send({message:"Avathar Updated Successfully."})
+                }
+            })
+        }
+        else{
+            console.log(err);
+            resp.send({message:"Error in updation"})
+        }
+    })
+});
 app.post('/updatedetails', (req, res) => {
     var mentor = req.body.mentor
     var Des = req.body.Des;
     var Tags = req.body.Tags;
     
     db.mentor.find({RegistrationNumber:mentor},(err,res2)=>{
-        if(res2.length !== 0){
+        if(res2[0].Status === "Accepted"){
             var tags1 = res2[0].Tags
             if (tags1.length !== 0) {
                 Tags += tags1
@@ -359,7 +444,6 @@ app.post('/updatedetails', (req, res) => {
         }
     })
 })
-
 app.post('/ismentor',(req,res)=>{
     var mentor = req.body.mentor
     db.mentor.find({RegistrationNumber:mentor},(err,res1)=>{
@@ -405,3 +489,26 @@ app.post('/pdelete',(req,res)=>{
         }
     })
 })
+
+const io = socket(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      credentials: true,
+    },
+});
+
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});
+

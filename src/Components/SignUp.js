@@ -66,7 +66,7 @@ const SignUp = () => {
 
         <div className="row mt-5">
           <Breadcrumb>
-              <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+              <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
               <BreadcrumbItem><Link to="/login">Login</Link></BreadcrumbItem>
               <BreadcrumbItem active>Signup</BreadcrumbItem>
           </Breadcrumb>

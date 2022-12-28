@@ -33,8 +33,7 @@ export default function Profile(props) {
                 mentee:fixedRegdNo,
                 Application:Des,
                 menteeTelegram:menteeTelegram
-            })
-                .then((response)=>toast(response.data.message));
+            }).then((response)=>toast(response.data.message));
         }
     }
     const useStyles = makeStyles((theme) => ({

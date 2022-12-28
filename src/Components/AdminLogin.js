@@ -24,7 +24,7 @@ const AdminLogin = () => {
         else {
           const Name = response.data[0].Name+" "
           ReactSession.set("Name",Name);
-          window.location.assign("/Components/AdminHome.js");
+          window.location.assign("/AdminHome");
           toast.success("Welcome to Community Connect!!")
         }
       });
@@ -43,7 +43,7 @@ const AdminLogin = () => {
         <div className = "container">
           <div className="row mt-5">
             <Breadcrumb>
-                <BreadcrumbItem><Link to="/Header">Home</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                 <BreadcrumbItem active>Admin</BreadcrumbItem>
             </Breadcrumb>
             <div className="col-12">
