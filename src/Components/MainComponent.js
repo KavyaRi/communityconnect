@@ -1,7 +1,6 @@
 import '../App.css';
 import Header from './Header.js';
 import Login from './Login.js';
-import AdminLogin from './AdminLogin.js';
 import BecomeAMentor from './BecomeAMentor.js';
 import MentorshipGuidelines from './MentorshipGuidelines.js';
 import Mentors from './Mentors.js';
@@ -18,7 +17,6 @@ import Requests from './Requests'
 import SetAvathar from './SetAvathar';
 import ForgetPassword from './ForgetPassword'
 import UpdateProfile from './UpdateProfile'
-import AdminHome from './AdminHome';
 import ChatBox from './ChatBox';
 
 class MainComponent extends Component {
@@ -29,11 +27,9 @@ class MainComponent extends Component {
           <Routes>
             <Route exact path = "/" element = {<Header />} />
             <Route path = "/guidelines" element = {<MentorshipGuidelines />}/>
-            <Route exact path='/Admin' element={< AdminLogin />}></Route>
             <Route exact path='/login' element={< Login />}></Route>
             <Route path='/forgetpassword' element={<ForgetPassword/>}></Route>
             <Route path='/signup' element={< SignUp />}></Route>
-            <Route path = '/AdminHome' element = {< AdminHome />}></Route>
             <Route element={<ProtedtedRoute/>}>
               <Route exact path='/home' element={< Header1 />}></Route>
               <Route path='/become-a-mentor' element={< BecomeAMentor />}></Route>

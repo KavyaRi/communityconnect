@@ -89,7 +89,7 @@ class UpdateProfile extends React.Component{
         }
         return (
         <div>
-            {this.state.data1.length === 0 && this.state.Des.length === 0 ? <Header1 message="You need to be mentor first"/>:<div>
+            {this.state.data1.length === 2 && this.state.Des.length === 0 ? <Header1 message="You need to be mentor first"/>:<div>
                 <Helmet>
                     <meta charSet="utf-8" />
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

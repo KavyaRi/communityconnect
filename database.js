@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const bcrypt = require("bcrypt");
 var mongojs = require('mongojs');
-var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['Admin','mentor','mentee','messages','mymentors']);
+var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['mentor','mentee','messages','mymentors']);
 const saltRounds = 10;
 const socket = require("socket.io");
 
@@ -68,27 +68,7 @@ app.post('/getMessages',async (req,res) =>{
     })
 
 })
-app.post('/Admin1', (req,res) => {
-    const Name = req.body.Name
-    const Password = req.body.Password
 
-    db.Admin.find({Name:Name},(err,found)=>{
-        if(err){
-            res.send({err:err})
-        }
-        if(found.length > 0){
-            if(found[0].Password === Password){
-                res.send("hi");
-            }
-            else{
-                res.send({message:"Wrong Credentials..!"})
-            }
-        }
-        else{
-            res.send({message:"User Doesn't Exist! Please register"})
-        }
-    })
-})
 app.post('/login1', (req,res) => {
     const RegdNo = req.body.RegdNo
     const password = req.body.Password
@@ -121,23 +101,17 @@ app.post('/signup1',(req,res) => {
     const Telegram = req.body.Telegram
     db.mentor.find({RegistrationNumber:RegdNo},(err,res2)=>{
         if(res2.length == 0){
-            db.mentor.insert({RegistrationNumber:RegdNo,Tags: tags,Name:Name,Description:Des,Telegram:Telegram,Status:'Requested',Rating:0},(err,res1)=>{
+            db.mentor.insert({RegistrationNumber:RegdNo,Tags:tags,Name:Name,Description:Des,Telegram:Telegram,Rating:0},(err,res1)=>{
                 if(err){
                     console.log(err);
                 }
                 else{
-                    res.send({message:"Request Submited for Mentorship"})
+                    res.send({message:"Congratulations on being a mentor, Please check mentorship guidelines to be a perfect mentor."})
                 }
             })
         }
-        
         else{
-            if(res2[0].Status === "Requested"){
-                res.send({message:"Wait for admin to confirm you as a mentor"})
-            }
-            else{
-                res.send({message:"User Already exist..! Update if needed."})
-            }
+            res.send({message:"User Already exist..! Update if needed."})
         }
     })
 });
@@ -166,18 +140,6 @@ app.post('/displayrequestedmentee',(req,res)=>{
         }
     })
 })
-app.post('Profiles',(req,res)=>{
-    db.mentor.find({Status:"Requested"},(err,res1)=>{
-        console.log(res1)
-        if(err){
-            console.log(err)
-        }
-        else{
-            res.send(res1)
-        }
-    })
-})
-
 app.post('/displaymentees',(req,res)=>{
     var mentor = req.body.mentor
     db.mymentors.find({mentor:mentor,status:"Accepted"},(err,res1)=>{
@@ -194,19 +156,15 @@ app.post('/getProfile',(req,res) => {
     var val = req.body.sendvalue
     var regdno = req.body.regdno
     db.mentor.find({Tags:{$regex : val},RegistrationNumber:{$ne:regdno}},(err,res1)=>{
-        if(res1[0].Status === 'Accepted'){
-            if(err){
-                console.log(err);
-            }
-            else{
-                res.send(res1);
-            }
+        if(err){
+            console.log(err);
         }
         else{
-            res.send('')
+            res.send(res1);
         }
     })
 })
+
 
 app.post('/setStatus',(req,res)=>{
     var mentor = req.body.mentor
@@ -367,19 +325,18 @@ app.post('/getdetails', (req,res)=>{
     var mentor = req.body.mentor
     // console.log(mentor)
     db.mentor.find({RegistrationNumber: mentor}, (err, res1) => {
-        if(res1[0].Status === "Accepted"){
-            if(err){
-                console.log(err)
-            }
-            else if(res1.length == 0){
-                res.send({Tags: "[]", Des : ""})
-            }
-            else{
-                res.send({Tags: res1[0].Tags, Des : res1[0].Description})
-            }
+        if(err){
+            console.log(err)
+        }
+        else if(res1.length == 0){
+            res.send({Tags: "[]", Des : ""})
+        }
+        else{
+            res.send({Tags: res1[0].Tags, Des : res1[0].Description})
         }
     })
 } )
+
 app.post('/AllUsers', (req,res,next)=>{
     var mentee = req.body.mentee
     
@@ -412,13 +369,14 @@ app.post('/SetAvathar1',(req,resp) =>{
         }
     })
 });
+
 app.post('/updatedetails', (req, res) => {
     var mentor = req.body.mentor
     var Des = req.body.Des;
     var Tags = req.body.Tags;
     
     db.mentor.find({RegistrationNumber:mentor},(err,res2)=>{
-        if(res2[0].Status === "Accepted"){
+        if(res2.length !== 0){
             var tags1 = res2[0].Tags
             if (tags1.length !== 0) {
                 Tags += tags1
@@ -444,6 +402,7 @@ app.post('/updatedetails', (req, res) => {
         }
     })
 })
+
 app.post('/ismentor',(req,res)=>{
     var mentor = req.body.mentor
     db.mentor.find({RegistrationNumber:mentor},(err,res1)=>{
@@ -489,6 +448,8 @@ app.post('/pdelete',(req,res)=>{
         }
     })
 })
+
+//___________________________End_____________________________________________
 
 const io = socket(server, {
     cors: {

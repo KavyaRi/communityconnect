@@ -6,7 +6,7 @@ import 'reactjs-popup/dist/index.css';
 toast.configure()
 export default function MenteeProfileDisplay(props) {
     const sendmessage = () => {
-        window.location.assign(props.menteeTelegram)
+        window.location.assign('/chat')
     }
     return (
         <div className="contact-card">

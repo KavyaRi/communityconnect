@@ -44,11 +44,6 @@ import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} f
                                         <Link to = '/login' className='Navlink'><h2><span className="fa fa-sign-in fa-lg"></span>Login </h2></Link>
                                     </NavItem>
                                 </Nav>   
-                                <Nav className="ml-5" navbar>
-                                    <NavItem>
-                                        <Link to = '/Admin' className='Navlink'><h2><span className="fa fa-share-square fa-lg"></span>Admin </h2> </Link>
-                                    </NavItem>
-                                </Nav>
                             </Nav>
                         </Collapse>    
                     </div>

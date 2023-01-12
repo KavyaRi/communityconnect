@@ -25,7 +25,7 @@ export default function MentorProfileDisplay(props) {
         }).then((response)=>{toast(response.data.message)})
     }
     const sendmessage = () => {
-        window.location.assign(props.mentorTelegram)
+        window.location.assign('/chat')
     }
     const useStyles = makeStyles((theme) => ({
         root: {
