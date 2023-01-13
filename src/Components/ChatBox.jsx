@@ -31,7 +31,10 @@ function Chat() {
     if (currentUser) {
       const data = await axios.post(`http://localhost:3001/AllUsers`, {
       mentee,
-      }).then(response =>{return response;});
+      }).then(response =>{
+        return response;
+        //console.log(response);
+      });
       setContacts(data.data);
     }
   }, [currentUser]);

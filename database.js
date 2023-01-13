@@ -29,14 +29,21 @@ app.post('/register1',(req,res)=>{
         else{
             db.mentee.find({RegistrationNumber: RegdNo},(err,response)=>{
                 if(response.length == 0){
-                    db.mentee.insert({FirstName:FirstName,LastName:LastName,Email:Email,Password:hash,RegistrationNumber:RegdNo,Telegram:telegram,isAvatharImageSet:false,AvatharImage : ""},(error,res1)=>{
-                        res.send({message:"Let's begin your journey with Community Connect."});
+                    db.mentee.find({Telegram: telegram},(err,resp)=>{
+                        if(resp.length == 0){
+                            db.mentee.insert({FirstName:FirstName,LastName:LastName,Email:Email,Password:hash,RegistrationNumber:RegdNo,Telegram:telegram,isAvatharImageSet:false,AvatharImage : "",users:[]},(error,res1)=>{
+                                res.send({message:"Let's begin your journey with Community Connect."});
+                            })
+                        }
+                        else{
+                            res.send({message:"Username already exist find another"});
+                        }
                     })
                 }
                 else{
                     res.send({message:"Already registered..!Please Login"})
                 }
-            })  
+            }) 
         }
     })
 });
@@ -170,7 +177,7 @@ app.post('/setStatus',(req,res)=>{
     var mentor = req.body.mentor
     var mentee = req.body.mentee
     var des  = req.body.Application
-    var menteeTelegram = "https://telegram.me/"+req.body.menteeTelegram
+    var menteeTelegram = req.body.menteeTelegram
     db.mymentors.find({mentee:mentee,mentor:mentor},{mentee:0},(err,res2)=>{
         var result = JSON.stringify(res2)
         if(err){
@@ -228,7 +235,7 @@ app.post('/setStatusA',(req,res)=>{
             var name = res2[0].Name
             var des = res2[0].Description
             var Tags = res2[0].Tags
-            var mentorTelegram = "https://telegram.me/"+res2[0].Telegram
+            var mentorTelegram = res2[0].Telegram
             db.mymentors.updateOne({mentor:mentor,mentee:mentee},{$set:{status:status,tags:Tags,Description:des,mentorTelegram:mentorTelegram}},(err,res1)=>{
                 if(err){
                     console.log(err)
@@ -237,6 +244,8 @@ app.post('/setStatusA',(req,res)=>{
                     res.send({message:"You have accepted "+mentee+" as your mentee"})
                 }
             })
+            db.mentee.updateOne({RegistrationNumber:mentor},{$push:{users:mentee}})
+            db.mentee.updateOne({RegistrationNumber:mentee},{$push:{users:mentor}})
         }
     })
 })
@@ -336,19 +345,30 @@ app.post('/getdetails', (req,res)=>{
         }
     })
 } )
-
-app.post('/AllUsers', (req,res,next)=>{
+app.post('/AllUsers', (req,res)=>{
     var mentee = req.body.mentee
-    
-    db.mentee.find({RegistrationNumber: {$ne : mentee}}, (err, res1) => {
+    let arr = [];
+    db.mentee.find({RegistrationNumber: mentee}, (err, res1) => {
         if(err){
             console.log(err)
         }
         else if(res1 !== 0){
-            return res.json(res1)
+            var user = res1[0].users;
+            for(var i = 0; i < user.length; i++) {
+                db.mentee.find({RegistrationNumber: user[i]}, (err, res2) => {
+                    if(err){
+                        console.log(err)
+                    }
+                    else if(res2 !== 0){
+                        const allusers = Object.assign({}, ...res2);
+                        arr = [...arr, allusers];
+                        //console.log(arr)
+                    }
+                });
+            }
         }
     })
-} )
+})
 app.post('/SetAvathar1',(req,resp) =>{
     var mentee = req.body.mentee
     var image = req.body.image

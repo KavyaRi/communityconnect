@@ -108,9 +108,9 @@ const SignUp = () => {
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label className="col-md-4 col-form-label"><h4>Telegram -</h4></label>
+                      <label className="col-md-4 col-form-label"><h4>Username -</h4></label>
                         <div className="col-md-6">
-                        <input type="username" className="form-control" placeholder="Enter Telegram username" onChange={(e)=>setUsername(e.target.value)} value={Username} required/>
+                        <input type="username" className="form-control" placeholder="Enter username" onChange={(e)=>setUsername(e.target.value)} value={Username} required/>
                         </div>
                     </div>
                     <div class="form-group row">
