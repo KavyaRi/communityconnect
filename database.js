@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const bcrypt = require("bcrypt");
 var mongojs = require('mongojs');
-var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['Admin','mentor','mentee','messages','mymentors']);
+var db = mongojs('mongodb+srv://KavyaSri:Kavya6084@cluster0.ya7qtel.mongodb.net/CommunityConnect?retryWrites=true&w=majority',['mentor','mentee','messages','mymentors']);
 const saltRounds = 10;
 const socket = require("socket.io");
 
