@@ -147,6 +147,7 @@ app.post('/displayrequestedmentee',(req,res)=>{
         }
     })
 })
+
 app.post('/displaymentees',(req,res)=>{
     var mentor = req.body.mentor
     db.mymentors.find({mentor:mentor,status:"Accepted"},(err,res1)=>{
@@ -171,7 +172,6 @@ app.post('/getProfile',(req,res) => {
         }
     })
 })
-
 
 app.post('/setStatus',(req,res)=>{
     var mentor = req.body.mentor
@@ -244,8 +244,8 @@ app.post('/setStatusA',(req,res)=>{
                     res.send({message:"You have accepted "+mentee+" as your mentee"})
                 }
             })
-            db.mentee.updateOne({RegistrationNumber:mentor},{$push:{users:mentee}})
-            db.mentee.updateOne({RegistrationNumber:mentee},{$push:{users:mentor}})
+            db.mentee.updateOne({RegistrationNumber:mentor},{$addToSet:{users:mentee}})
+            db.mentee.updateOne({RegistrationNumber:mentee},{$addToSet:{users:mentor}})
         }
     })
 })
@@ -344,7 +344,7 @@ app.post('/getdetails', (req,res)=>{
             res.send({Tags: res1[0].Tags, Des : res1[0].Description})
         }
     })
-} )
+})
 app.post('/AllUsers', (req,res)=>{
     var mentee = req.body.mentee
     let arr = [];
@@ -352,22 +352,32 @@ app.post('/AllUsers', (req,res)=>{
         if(err){
             console.log(err)
         }
-        else if(res1 !== 0){
+        else {
             var user = res1[0].users;
             for(var i = 0; i < user.length; i++) {
-                db.mentee.find({RegistrationNumber: user[i]}, (err, res2) => {
+                db.mentee.find({RegistrationNumber: user[i]},(err,res2) =>{
                     if(err){
                         console.log(err)
                     }
-                    else if(res2 !== 0){
+                    else{
                         const allusers = Object.assign({}, ...res2);
                         arr = [...arr, allusers];
-                        //console.log(arr)
+                        if(arr.length === user.length){
+                            return res.json(arr)
+                        }
                     }
                 });
             }
         }
     })
+    /*db.mentee.find({RegistrationNumber: {$ne : mentee}}, (err, res1) => {
+        if(err){
+            console.log(err)
+        }
+        else if(res1 !== 0){
+            return res.json(res1)
+        }
+    })*/
 })
 app.post('/SetAvathar1',(req,resp) =>{
     var mentee = req.body.mentee
@@ -394,7 +404,6 @@ app.post('/updatedetails', (req, res) => {
     var mentor = req.body.mentor
     var Des = req.body.Des;
     var Tags = req.body.Tags;
-    
     db.mentor.find({RegistrationNumber:mentor},(err,res2)=>{
         if(res2.length !== 0){
             var tags1 = res2[0].Tags

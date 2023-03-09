@@ -10,6 +10,7 @@ import data from './Data.json'
 import Header1 from "./Header1";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
+import FooterComponent1 from "./FooterComponent1.js";
 
 class UpdateProfile extends React.Component{
 
@@ -159,7 +160,9 @@ class UpdateProfile extends React.Component{
                         </div>
                     </div>
                 </div>}
+                <FooterComponent1 />
             </div>
+            
         );
     }
 }

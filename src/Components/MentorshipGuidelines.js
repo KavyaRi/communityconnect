@@ -6,7 +6,7 @@ import ApplyGuidelines from "./ApplyGuidelines.js";
 import Navbar1 from "./Navbar1";
 import { Link } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-
+import FooterComponent from "./FooterComponent";
 
 function MentorshipGuidelines() {    
 return (
@@ -53,6 +53,7 @@ return (
             </div>
             <br/><br/>
         </div>
+        <FooterComponent />
     </div>
     );
 }

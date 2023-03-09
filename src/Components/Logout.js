@@ -5,8 +5,9 @@ import styled from "styled-components";
 export default function Logout() {
   const navigate = useNavigate();
   const handleClick = async () => {
-      navigate("/home");
-    }
+    navigate("/home");
+  }
+
   return (
     <Button onClick={handleClick}>
       <BiPowerOff />
@@ -22,6 +23,8 @@ const Button = styled.button`
   border-radius: 0.5rem;
   background-color: #9a86f3;
   border: none;
+  border: none;
+  background-color: #9a86f3;
   cursor: pointer;
   svg {
     font-size: 1.3rem;

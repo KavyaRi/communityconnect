@@ -136,10 +136,10 @@ const Container = styled.div`
     gap: 1rem;
     overflow: auto;
     &::-webkit-scrollbar {
-      background-color: #9575CD;
-      width: 0.3rem;
+      background-color: #0d0d30;
+      width: 0.5rem;
       &-thumb {
-        background-color: floralwhite;
+        background-color: #9575CD;
         width: 0.1rem;
         border-radius: 1rem;
       }

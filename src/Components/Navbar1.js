@@ -4,7 +4,7 @@ import './navbar1.css';
 import {Link} from 'react-router-dom'
 import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} from "reactstrap";
 
- class Navbar1 extends Component {
+class Navbar1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,13 +17,13 @@ import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} f
           isNavOpen: !this.state.isNavOpen
         });
     }
-     render() {
-         return (
+    render() {
+        return (
             <>
                 <Navbar dark expand="md">
                     <div className="container">
                         <NavbarToggler onClick={this.toggleNav} />
-                        <NavbarBrand className="mr-auto" href="/Header">
+                        <NavbarBrand className="mr-auto" href="/">
                             <img src={logo} height="50" width="75" 
                                     alt="Ristorante Con Fusion" />
                         </NavbarBrand>
@@ -53,14 +53,14 @@ import {Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron} f
                         <div className="row row-header">
                             <div className="col-12 col-sm-6"> 
                                 <h1>Community Connect</h1>
-                                <p>We are here to Connect the best minds of the campaus to make several fusion experiences, associate and Make your fantacy come true!</p>
+                                <p>We are here to Connect the best minds of the campus to make several fusion experiences. Associate and Make your fantacy come true!</p>
                             </div>
                         </div>
                     </div>
-                </Jumbotron> 
+                </Jumbotron>
             </>
-         )
+        )
 
-     }
- }
+    }
+}
 export default Navbar1;

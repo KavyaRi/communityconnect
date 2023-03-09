@@ -5,6 +5,7 @@ import { MentorGuidelines } from "./MentorGuidelines.js";
 import { MenteeGuidelines } from "./MenteeGuidelines.js";
 import ApplyGuidelines from "./ApplyGuidelines.js";
 import { Link } from "react-router-dom";
+import FooterComponent1 from "./FooterComponent1.js";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 function MentorshipGuidelines1() {    
@@ -52,6 +53,7 @@ return (
             </div>
             <br/><br/>
         </div>
+        <FooterComponent1 />
     </div>
     );
 }

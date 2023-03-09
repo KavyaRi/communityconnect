@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import './requests.png'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
+import FooterComponent1 from "./FooterComponent1.js";
 
 function Requests() {
     const buttonErase = {
@@ -58,6 +59,7 @@ function Requests() {
                     </div>
                 </div>
             </div>
+            <FooterComponent1 />
         </div>
     );
 }

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ReactSession } from 'react-client-session';
 import { Link } from "react-router-dom";
+import FooterComponent from "./FooterComponent";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 toast.configure();
@@ -80,7 +81,7 @@ const Login = () => {
                       <div class="form-group row">
                         <label className="col-md-4 col-form-label"><h4>Password   -</h4></label>
                           <div className="col-md-6">
-                            <input type="text" className="form-control" placeholder="Enter password" onChange={(e)=>setPassword(e.target.value)} value={Password}/>
+                            <input type="Password" className="form-control" placeholder="Enter password" onChange={(e)=>setPassword(e.target.value)} value={Password}/>
                           </div>
                       </div>
                       <div className="col-md-4 align-center mt-5">
@@ -100,6 +101,7 @@ const Login = () => {
               </div>
             </div>
           </div>
+          <FooterComponent />
         </div>
     );
 }

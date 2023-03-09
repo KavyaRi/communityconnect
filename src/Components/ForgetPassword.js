@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar1 from "./Navbar1";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import FooterComponent from "./FooterComponent.js";
 
 toast.configure();
 const ForgetPassword = () => {
@@ -92,6 +93,7 @@ const ForgetPassword = () => {
                   </div>
                 </div>
               </div>
+              <FooterComponent />
             </div>
         );
 }

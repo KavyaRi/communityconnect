@@ -10,6 +10,7 @@ import {Multiselect} from 'multiselect-react-dropdown'
 import data from './Data.json'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
+import FooterComponent1 from "./FooterComponent1.js";
 
 toast.configure()
 const BecomeAMentor = () => {
@@ -96,16 +97,16 @@ const BecomeAMentor = () => {
                 </Helmet>
                 <Navbar />
                 <div className = "container">
-                <div className="row mt-5">
-                    <Breadcrumb>
-                        <BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>BecomeAMentor</BreadcrumbItem>
-                    </Breadcrumb>
-                    <div className="col-12">
-                        <h4>Become A Mentor</h4>
-                        <hr />
-                    </div>                
-                </div>
+                    <div className="row mt-5">
+                        <Breadcrumb>
+                            <BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>BecomeAMentor</BreadcrumbItem>
+                        </Breadcrumb>
+                        <div className="col-12">
+                            <h4>Become A Mentor</h4>
+                            <hr />
+                        </div>                
+                    </div>
                 <div className = "row row-content align-items-center">
                     <div className="col-12 col-sm-6">
                         <div className="card">
@@ -155,6 +156,7 @@ const BecomeAMentor = () => {
                     </div>
                     </div>
                 </div>
+                <FooterComponent1 />
             </div>
         );
 }

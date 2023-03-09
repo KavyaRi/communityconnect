@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar1 from './Navbar1';
 import './Header.css';
 import Carousel from 'react-bootstrap/Carousel';
-
+import FooterComponent from "./FooterComponent"
 function Header() {
   return (
     <>
@@ -63,6 +63,7 @@ function Header() {
         </div>
       </div>
     </div>
+    <FooterComponent />
     </> 
   );
 }

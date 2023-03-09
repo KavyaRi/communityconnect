@@ -91,16 +91,6 @@ class Navbari extends Component {
                         </Collapse>    
                     </div>
                 </Navbar>
-                <Jumbotron>   
-                    <div className="container">
-                        <div className="row row-header">
-                            <div className="col-12 col-sm-6"> 
-                                <h1>Community Connect</h1>
-                                <p>We are here to Connect the best minds of the campus to make several fusion experiences. Associate and Make your fantacy come true!</p>
-                            </div>
-                        </div>
-                    </div>
-                </Jumbotron> 
             </>
         )
 

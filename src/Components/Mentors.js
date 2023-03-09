@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import Errorfile from "./Errorfile";
 import { ReactSession } from "react-client-session";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import FooterComponent1 from "./FooterComponent1.js";
 import { Link } from "react-router-dom";
 
 class Mentors extends React.Component {
@@ -61,6 +62,7 @@ class Mentors extends React.Component {
 						</div>
 					</div>
 				</div>
+				<FooterComponent1 />
 			</div>
 		);
 	}

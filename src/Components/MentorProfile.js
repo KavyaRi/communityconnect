@@ -7,6 +7,7 @@ import MentorProfileDisplay from "./MentorProfileDisplay";
 import NoResults from "./NoResults";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
+import FooterComponent1 from "./FooterComponent1.js";
 
 class MenteeProfile extends React.Component{
 
@@ -53,6 +54,7 @@ class MenteeProfile extends React.Component{
 		<div className="col-12 mt-5">
 			<hr />
 		</div>   
+		<FooterComponent1 />
 	</div>
     );
   }

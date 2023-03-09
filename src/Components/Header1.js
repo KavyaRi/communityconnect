@@ -1,17 +1,17 @@
-import logo from './logo1.png';
 import React from 'react';
 import Navbar from './Navbar';
 import './Header.css';
 import { toast } from 'react-toastify';
 import Carousel from 'react-bootstrap/Carousel';
+import FooterComponent1 from "./FooterComponent1";
 
 toast.configure()
 function Header1(props) {
   toast.info(props.message)
   return (
     <div className="header">
-    <Navbar />
-      <div className = "container">
+      <Navbar />
+        <div className = "container">
           <div className = "row">
             <div className="col-12 mt-5">
               <h1 className = "mt-5">We Are Here For A Reason.</h1> 
@@ -67,7 +67,8 @@ function Header1(props) {
             </div>
           </div>
         </div>
-    </div>    
+      <FooterComponent1 />
+    </div>  
   );
 }
 

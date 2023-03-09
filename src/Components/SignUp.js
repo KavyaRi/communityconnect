@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator';
 import Navbar1 from "./Navbar1";
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import FooterComponent from "./FooterComponent.js";
 
 toast.configure();
 const SignUp = () => {
@@ -139,6 +140,7 @@ const SignUp = () => {
             </div>
           </div>
         </div>
+        <FooterComponent />
       </div>
   );
 }

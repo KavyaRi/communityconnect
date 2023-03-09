@@ -7,6 +7,8 @@ import ChatContainer from "./ChatContainer";
 import Contacts from "./Contacts";
 import Welcome from "./Welcome";
 import { ReactSession } from 'react-client-session';
+import FooterComponent1 from "./FooterComponent1.js";
+import Nav from "./Nav";
 
 function Chat() {
   const navigate = useNavigate();
@@ -51,6 +53,7 @@ function Chat() {
   };
   return (
     <>
+      <Nav />
       <Container>
         <div className="Box">
         <Contacts contacts={contacts} changeChat={handleChatChange}/>
@@ -61,6 +64,7 @@ function Chat() {
           )}
         </div>
       </Container>
+      <FooterComponent1 />
     </>
   );
 }
@@ -73,7 +77,6 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #512DA8;
   .Box {
     width:90%;
     height:85vh;
